@@ -8,7 +8,11 @@
   <button type="submit">Add</button>
 </form>
 
-
+<p>==== from json =====</p>
 <ul>
   <li *ngFor="let name of nameListService.get() | async">{{name}}</li>
+</ul>
+<p>==== from php =====</p>
+<ul>
+  <li *ngFor="let data of nameListService.load() | async">{{data}}</li>
 </ul>

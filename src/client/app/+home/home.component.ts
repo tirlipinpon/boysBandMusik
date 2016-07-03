@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { REACTIVE_FORM_DIRECTIVES } from '@angular/forms';
 
 import { NameListService } from '../shared/index';
@@ -13,9 +13,10 @@ import { NameListService } from '../shared/index';
   styleUrls: ['home.component.css'],
   directives: [REACTIVE_FORM_DIRECTIVES]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   newName: string;
+  datas:string[] = [];
 
   /**
    * Creates an instance of the HomeComponent with the injected
@@ -24,6 +25,17 @@ export class HomeComponent {
    * @param {NameListService} nameListService - The injected NameListService.
    */
   constructor(public nameListService: NameListService) {}
+
+  ngOnInit() {
+    const osevableObject$ = this.nameListService.load();
+    osevableObject$.subscribe(
+      data => this.datas = data,
+      err => console.error("Error occuried:", err),
+      () => console.log("completed")
+    )
+    console.log(this.datas);
+  }
+
 
   /**
    * Calls the add method of the NameListService with the current newName value of the form.

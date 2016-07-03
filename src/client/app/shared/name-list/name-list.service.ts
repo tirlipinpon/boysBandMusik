@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/publishReplay';
+import 'rxjs/add/operator/catch';
 
 /**
  * This class provides the NameList service with methods to read names and add names.
@@ -11,6 +12,7 @@ import 'rxjs/add/operator/publishReplay';
 @Injectable()
 export class NameListService {
 
+  datasFromPhp:any = [];
   /**
    * The array of initial names provided by the service.
    * @type {Array}
@@ -48,6 +50,29 @@ export class NameListService {
         }).publishReplay(1).refCount();
     }
     return this.request;
+  }
+
+
+  load(): Observable<string[]>{
+    return this.http.get('http://localhost/php/datas.php')
+    .map(this.extractData)
+    //.catch(this.handleError);
+  }
+
+  private extractData(res: Response) {
+    console.log(res);
+  let body = res.json();
+  console.log(body);
+  return body || { };
+}
+
+  private handleError (error: any) {
+    // In a real world app, we might use a remote logging infrastructure
+    // We'd also dig deeper into the error to get a better message
+    let errMsg = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(errMsg); // log to console instead
+    return Observable.throw(errMsg);
   }
 
   /**
