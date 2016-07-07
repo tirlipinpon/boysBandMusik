@@ -1,7 +1,8 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit,AfterViewChecked } from '@angular/core';
 import { REACTIVE_FORM_DIRECTIVES } from '@angular/forms';
-
 import { NameListService } from '../shared/index';
+import { Musique } from './musique';
+import { Observable } from 'rxjs/Observable';
 
 /**
  * This class represents the lazy loaded HomeComponent.
@@ -13,10 +14,12 @@ import { NameListService } from '../shared/index';
   styleUrls: ['home.component.css'],
   directives: [REACTIVE_FORM_DIRECTIVES]
 })
+
 export class HomeComponent implements OnInit {
 
   newName: string;
-  datas:string[] = [];
+  datas: Musique[];
+  datasObservable$: Observable<Musique[]>;
 
   /**
    * Creates an instance of the HomeComponent with the injected
@@ -24,18 +27,20 @@ export class HomeComponent implements OnInit {
    *
    * @param {NameListService} nameListService - The injected NameListService.
    */
-  constructor(public nameListService: NameListService) {}
+  constructor(public nameListService: NameListService) {
+    //this.datasObservable$ = this.nameListService.load();
+  }
 
   ngOnInit() {
     const osevableObject$ = this.nameListService.load();
     osevableObject$.subscribe(
-      data => this.datas = data,
+      (data:Musique[]) => {
+        this.datas = data
+      , console.log(this.datas) },
       err => console.error("Error occuried:", err),
       () => console.log("completed")
-    )
-    console.log(this.datas);
+    );
   }
-
 
   /**
    * Calls the add method of the NameListService with the current newName value of the form.

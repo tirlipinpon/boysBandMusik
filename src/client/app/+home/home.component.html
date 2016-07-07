@@ -13,6 +13,14 @@
   <li *ngFor="let name of nameListService.get() | async">{{name}}</li>
 </ul>
 <p>==== from php =====</p>
+
+<!-- {{datasObservable$ | async}} -->
+
+{{datas.id}}
+{{datas.titre}}
+{{datas.url}}
+<!--
 <ul>
-  <li *ngFor="let data of nameListService.load() | async">{{data}}</li>
+  <li *ngFor="let data of datas | async">{{data}}</li>
 </ul>
+-->
