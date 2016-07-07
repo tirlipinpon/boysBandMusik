@@ -10,9 +10,16 @@
 
 <p>==== from json =====</p>
 <ul>
-  <li *ngFor="let name of nameListService.get() | async">{{name}}</li>
+  <!-- <li *ngFor="let name of nameListService.get() | async">{{name}}</li> -->
 </ul>
 <p>==== from php =====</p>
+
+<!-- {{datasObservable$ | async}} -->
+<!--
+{{datas.id}}
+{{datas.titre}}
+{{datas.url}} -->
+
 <ul>
-  <li *ngFor="let data of nameListService.load() | async">{{data}}</li>
+  <li *ngFor="let data of nameListService.datasObservable$ | async">{{data.id}}{{data.titre}}</li>
 </ul>
