@@ -56,6 +56,8 @@ export class NameListService {
   load(): Observable<Musique[]>{
     return this.http.get('http://localhost/php/datas.php')
     .map(this.extractData)
+
+    
     //.catch(this.handleError);
   }
 

@@ -15,12 +15,11 @@
 <p>==== from php =====</p>
 
 <!-- {{datasObservable$ | async}} -->
-
+<!--
 {{datas.id}}
 {{datas.titre}}
-{{datas.url}}
-<!--
+{{datas.url}} -->
+
 <ul>
-  <li *ngFor="let data of datas | async">{{data}}</li>
+  <li *ngFor="let data of datas">{{data.id}}{{data.titre}}</li>
 </ul>
--->

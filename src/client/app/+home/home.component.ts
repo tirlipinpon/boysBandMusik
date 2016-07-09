@@ -39,8 +39,12 @@ export class HomeComponent implements OnInit {
       , console.log(this.datas) },
       err => console.error("Error occuried:", err),
       () => console.log("completed")
-    );
+    )
+    ;
+
   }
+
+
 
   /**
    * Calls the add method of the NameListService with the current newName value of the form.
