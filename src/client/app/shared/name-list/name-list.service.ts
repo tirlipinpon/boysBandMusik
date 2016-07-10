@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Musique} from '../+home/../../+home/musique';
+import { Musique } from '../+home/../../+home/musique';
+import { xhrHeaders } from '../+home/../../+home/xhr-headers';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/publishReplay';
@@ -24,6 +25,7 @@ export class NameListService {
    * @type {Observable<string[]>}
    */
   private request: Observable<string[]>;
+  musiqueArray:string[] = [];
 
   /**
    * Creates a new NameListService with the injected Http.
@@ -56,9 +58,36 @@ export class NameListService {
   load(): Observable<Musique[]>{
     return this.http.get('http://localhost/php/datas.php')
     .map(this.extractData)
-
-    
     //.catch(this.handleError);
+  }
+
+  delete(id:number){
+    let idDelete = 'id='+id;
+    this.http.delete(
+      `http://localhost/php/delete.php/${idDelete}`,
+      xhrHeaders()
+      )
+      .subscribe(
+        () => {},
+        err => console.error(err)
+      );
+  }
+
+  saveMusique(musique:string){
+    const headers = new Headers();
+    headers.append('Content-Type',
+    'application/json; charset=utf-8');
+
+    const newMusique = musique;
+    this.musiqueArray.push(newMusique);
+    this.http.post(
+      'http://localhost/php/postdata.php',
+      JSON.stringify(newMusique),
+      headers
+    ).subscribe(
+      () => {},
+      err => console.error(err)
+    );
   }
 
   private extractData(res: Response) {

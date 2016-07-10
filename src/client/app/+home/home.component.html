@@ -21,5 +21,13 @@
 {{datas.url}} -->
 
 <ul>
-  <li *ngFor="let data of datas">{{data.id}}{{data.titre}}</li>
+  <li *ngFor="let data of datas">
+    {{data.id}}
+    {{data.titre}}
+    {{data.url}}
+    <button (click)="delete(data.id)">delete</button>
+  </li>
 </ul>
+
+<input class="add-lesson" placeholder="add lesson"
+(keyup.enter)="nameListService.saveMusique(input.value)" #input>

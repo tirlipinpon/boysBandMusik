@@ -32,6 +32,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.load();
+  }
+
+  load(){
     const osevableObject$ = this.nameListService.load();
     osevableObject$.subscribe(
       (data:Musique[]) => {
@@ -39,11 +43,24 @@ export class HomeComponent implements OnInit {
       , console.log(this.datas) },
       err => console.error("Error occuried:", err),
       () => console.log("completed")
-    )
-    ;
-
+    );
   }
 
+  delete(id:number){
+    this.nameListService.delete(id);
+    this.load();
+  }
+
+// saveMusique(musique:string){
+//   this.nameListService.createMusique(musique)
+//   .subscribe(
+//     () => {
+//       this.nameListService.load();
+//       console.log('musique saved successfuly');
+//     },
+//     err => console.error(err)
+//   );
+// }
 
 
   /**
